@@ -1,5 +1,4 @@
 import org.jetbrains.changelog.Changelog
-import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
 plugins {
@@ -9,6 +8,7 @@ plugins {
     alias(libs.plugins.changelog)
     alias(libs.plugins.qodana)
     alias(libs.plugins.kover)
+    id("com.gradleup.shadow") version "9.0.0-beta4"
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -43,6 +43,15 @@ dependencies {
         pluginVerifier()
         zipSigner()
         testFramework(TestFrameworkType.Platform)
+    }
+}
+
+tasks {
+    shadowJar {
+        archiveClassifier.set("")
+        dependencies {
+            include(dependency("org.knowm.xchart:xchart:3.8.10-SNAPSHOT"))
+        }
     }
 }
 
