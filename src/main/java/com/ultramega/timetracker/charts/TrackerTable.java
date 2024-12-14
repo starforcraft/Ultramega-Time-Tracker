@@ -1,17 +1,15 @@
 package com.ultramega.timetracker.charts;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import javax.swing.BorderFactory;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
-
 import com.intellij.ui.table.JBTable;
 import com.ultramega.timetracker.utils.Bundle;
 import com.ultramega.timetracker.utils.Utils;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class TrackerTable extends JBTable {
     private final TrackerPieChart pieChart;

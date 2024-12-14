@@ -1,5 +1,16 @@
 # Ultramega Time Tracker Changelog
 
+## [1.0.1] - 2024-12-14
+
+### Fixed
+
+- Fixed error when switching projects
+
 ## [1.0.0]
 
+### Added
+
+- Initial project
+
 [1.0.0]: https://github.com/starforcraft/time-tracker/commits/v1.0.0
+[1.0.1]: https://github.com/starforcraft/time-tracker/commits/v1.0.1

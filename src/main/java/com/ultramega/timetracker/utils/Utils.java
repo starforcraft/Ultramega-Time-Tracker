@@ -65,11 +65,13 @@ public final class Utils {
 
     @Nullable
     public static VirtualFile getOpenedFile(Project project) {
+        if (project.isDisposed())
+            return null;
+
         VirtualFile[] selectedFiles = FileEditorManager.getInstance(project).getSelectedFiles();
 
-        if (selectedFiles.length == 0) {
+        if (selectedFiles.length == 0)
             return null;
-        }
 
         return selectedFiles[0];
     }

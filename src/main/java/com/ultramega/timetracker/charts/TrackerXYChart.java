@@ -1,16 +1,5 @@
 package com.ultramega.timetracker.charts;
 
-import java.awt.Color;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.intellij.ui.JBColor;
 import com.intellij.util.ui.JBFont;
 import com.ultramega.timetracker.display.TimeDisplayDialog;
@@ -18,6 +7,12 @@ import com.ultramega.timetracker.utils.Bundle;
 import com.ultramega.timetracker.utils.Utils;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
+
+import java.awt.*;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.*;
 
 public class TrackerXYChart extends XYChart {
     private final TimeDisplayDialog displayDialog;

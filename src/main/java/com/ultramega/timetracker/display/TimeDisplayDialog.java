@@ -1,23 +1,5 @@
 package com.ultramega.timetracker.display;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.ui.SimpleListCellRenderer;
@@ -29,6 +11,12 @@ import com.ultramega.timetracker.charts.TrackerTable;
 import com.ultramega.timetracker.charts.TrackerXYChart;
 import com.ultramega.timetracker.utils.Bundle;
 import org.knowm.xchart.XChartPanel;
+
+import javax.swing.*;
+import java.awt.*;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 
 public final class TimeDisplayDialog extends DialogWrapper {
     private final TimeTrackerService timeTrackerService;

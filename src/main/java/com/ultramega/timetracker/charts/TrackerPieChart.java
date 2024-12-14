@@ -1,11 +1,5 @@
 package com.ultramega.timetracker.charts;
 
-import java.awt.Color;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.intellij.ui.JBColor;
 import com.intellij.util.ui.JBFont;
 import com.ultramega.timetracker.display.TimeDisplayDialog;
@@ -13,6 +7,12 @@ import com.ultramega.timetracker.utils.Utils;
 import org.knowm.xchart.PieChart;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.style.Styler;
+
+import java.awt.*;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TrackerPieChart extends PieChart {
     private final TimeDisplayDialog displayDialog;

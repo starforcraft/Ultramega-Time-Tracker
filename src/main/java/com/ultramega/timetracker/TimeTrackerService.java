@@ -24,7 +24,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 @Service(Service.Level.PROJECT)
-@State(name = "UltramegaTimeTracker", storages = @Storage("ultramegaTimeTracker.xml"))
+@State(name = "UltramegaTimeTracker", storages = @Storage("ultramega-time-tracker.xml"))
 public final class TimeTrackerService implements PersistentStateComponent<TimeTrackerData> {
     private static final long TICK_DELAY = 1;
     private static final TimeUnit TICK_DELAY_UNIT = TimeUnit.SECONDS;
