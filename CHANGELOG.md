@@ -1,5 +1,11 @@
 # Ultramega Time Tracker Changelog
 
+## [1.0.3] - 2024-12-15
+
+### Added
+
+- Hover information in line chart is now scrollable
+
 ## [1.0.2] - 2024-12-15
 
 ### Added

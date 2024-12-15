@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.knowm.xchart:xchart:3.8.10-SNAPSHOT")
+    implementation("org.knowm.xchart:xchart:3.8.11-SNAPSHOT")
 
     testImplementation(libs.junit)
 
@@ -50,10 +50,12 @@ tasks {
     shadowJar {
         archiveClassifier.set("")
         dependencies {
-            include(dependency("org.knowm.xchart:xchart:3.8.10-SNAPSHOT"))
+            include(dependency("org.knowm.xchart:xchart:3.8.11-SNAPSHOT"))
             include(dependency("de.erichseifert.vectorgraphics2d:VectorGraphics2D:0.13"))
             include(dependency("de.rototor.pdfbox:graphics2d:3.0.2"))
             include(dependency("com.madgag:animated-gif-lib:1.4"))
+            include(dependency("org.apache.pdfbox:pdfbox:3.0.2"))
+            include(dependency("org.apache.pdfbox:fontbox:3.0.2"))
         }
     }
 }
