@@ -10,6 +10,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.concurrency.EdtExecutorService;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.ultramega.timetracker.actions.ForceStopCountingListener;
+import com.ultramega.timetracker.display.TimeDialogSelectableOptions;
 import com.ultramega.timetracker.utils.Status;
 import com.ultramega.timetracker.utils.Utils;
 import com.ultramega.timetracker.widgets.TimeTrackerWidget;
@@ -30,6 +31,7 @@ public final class TimeTrackerService implements PersistentStateComponent<TimeTr
     private static final TimeUnit TICK_DELAY_UNIT = TimeUnit.SECONDS;
 
     private final TimeTrackerData timeTrackerData = new TimeTrackerData();
+    private final TimeDialogSelectableOptions dialogSelectableOptions = new TimeDialogSelectableOptions();
     private final Project project;
 
     public long totalTime;
@@ -147,6 +149,10 @@ public final class TimeTrackerService implements PersistentStateComponent<TimeTr
 
     public Status getStatus() {
         return status;
+    }
+
+    public TimeDialogSelectableOptions getDialogSelectableOptions() {
+        return dialogSelectableOptions;
     }
 
     public void fireForceStopCountingChange() {

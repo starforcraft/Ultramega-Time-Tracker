@@ -20,18 +20,16 @@ import java.time.temporal.TemporalAdjusters;
 
 public final class TimeDisplayDialog extends DialogWrapper {
     private final TimeTrackerService timeTrackerService;
+    private final TimeDialogSelectableOptions selectableOptions;
     private final TrackerXYChart lineChart;
     private final TrackerPieChart pieChart;
     private final JLabel pieChartLabel;
     private final TrackerTable classTable;
 
-    private FilterItems selectedFilter = FilterItems.TWELVE_HOURS;
-    private SelectableCharts selectedChart = SelectableCharts.PIE_CHART;
-    private boolean showTotalActivity = false;
-
     public TimeDisplayDialog(TimeTrackerService timeTrackerService) {
         super(true);
         this.timeTrackerService = timeTrackerService;
+        this.selectableOptions = timeTrackerService.getDialogSelectableOptions();
         this.lineChart = new TrackerXYChart(this);
         this.pieChart = new TrackerPieChart(this);
         this.pieChartLabel = new JLabel(UIBundle.message("message.nothingToShow"));
@@ -82,23 +80,23 @@ public final class TimeDisplayDialog extends DialogWrapper {
 
         // Filter ComboBox
         ComboBox<FilterItems> filterComboBox = new ComboBox<>(FilterItems.values());
-        filterComboBox.setSelectedItem(selectedFilter);
+        filterComboBox.setSelectedItem(selectableOptions.selectedFilter);
         filterComboBox.setRenderer(SimpleListCellRenderer.create("", (filterItems) ->
                 Bundle.message("display.TimeTrackerStats.filter." + filterItems.getName())
         ));
         filterComboBox.addActionListener(e -> {
             FilterItems selectedItem = (FilterItems) filterComboBox.getSelectedItem();
             if (selectedItem != null) {
-                selectedFilter = selectedItem;
+                selectableOptions.selectedFilter = selectedItem;
                 updateCharts(lineChartPanel, pieChartPanel, selectChartPanel);
             }
         });
 
         // Total Activity CheckBox
-        JCheckBox totalCheckBox = new JCheckBox(Bundle.message("display.TimeTrackerStats.checkbox.TotalActivity"), showTotalActivity);
+        JCheckBox totalCheckBox = new JCheckBox(Bundle.message("display.TimeTrackerStats.checkbox.TotalActivity"), selectableOptions.showTotalActivity);
         totalCheckBox.addActionListener(e -> {
-            showTotalActivity = totalCheckBox.isSelected();
-            lineChart.getStyler().setCursorZeroString(showTotalActivity ? null : "00:00:00");
+            selectableOptions.showTotalActivity = totalCheckBox.isSelected();
+            lineChart.getStyler().setCursorZeroString(selectableOptions.showTotalActivity ? null : "00:00:00");
             updateCharts(lineChartPanel, pieChartPanel, selectChartPanel);
         });
 
@@ -110,8 +108,8 @@ public final class TimeDisplayDialog extends DialogWrapper {
         selectChartComboBox.addActionListener(e -> {
             SelectableCharts selectedItem = (SelectableCharts) selectChartComboBox.getSelectedItem();
             if (selectedItem != null) {
-                selectedChart = selectedItem;
-                cardLayout.show(secondChartPanelContainer, selectedChart.getName());
+                selectableOptions.selectedChart = selectedItem;
+                cardLayout.show(secondChartPanelContainer, selectableOptions.selectedChart.getName());
             }
         });
         selectChartPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -163,7 +161,7 @@ public final class TimeDisplayDialog extends DialogWrapper {
     }
 
     public LocalDateTime getStartLocalDateTime(LocalDateTime now) {
-        return switch (selectedFilter) {
+        return switch (selectableOptions.selectedFilter) {
             case TWELVE_HOURS -> now.minusHours(12).truncatedTo(ChronoUnit.HOURS);
             case TWENTY_FOUR_HOURS -> now.minusHours(24).truncatedTo(ChronoUnit.HOURS);
             case WEEK -> now.minusWeeks(1).truncatedTo(ChronoUnit.DAYS);
@@ -183,44 +181,10 @@ public final class TimeDisplayDialog extends DialogWrapper {
     }
 
     public FilterItems getSelectedFilter() {
-        return selectedFilter;
+        return selectableOptions.selectedFilter;
     }
 
     public boolean isShowTotalActivity() {
-        return showTotalActivity;
-    }
-
-    public enum FilterItems {
-        TWELVE_HOURS("12hours"),
-        TWENTY_FOUR_HOURS("24hours"),
-        WEEK("week"),
-        MONTH("month"),
-        YEAR("year");
-        //TOTAL("total");
-
-        private final String name;
-
-        FilterItems(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
-
-    private enum SelectableCharts {
-        PIE_CHART("pie_chart"),
-        TABLE("table");
-
-        private final String name;
-
-        SelectableCharts(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
+        return selectableOptions.showTotalActivity;
     }
 }

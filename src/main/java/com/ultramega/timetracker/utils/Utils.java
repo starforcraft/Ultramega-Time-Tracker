@@ -5,6 +5,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -13,6 +14,9 @@ import java.util.Comparator;
 import java.util.Date;
 
 public final class Utils {
+    @SuppressWarnings("UseJBColor")
+    public static Color TRANSPARENT = new Color(0, 0, 0, 0);
+
     public static String convertSecondsToTime(long totalSeconds) {
         int hours = (int) (totalSeconds / 3600);
         int minutes = (int) ((totalSeconds % 3600) / 60);

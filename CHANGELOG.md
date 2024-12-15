@@ -1,5 +1,11 @@
 # Ultramega Time Tracker Changelog
 
+## [1.0.2] - 2024-12-15
+
+### Added
+
+- Selectable options in dialog are now saved
+
 ## [1.0.1] - 2024-12-14
 
 ### Fixed

@@ -8,13 +8,12 @@ import org.knowm.xchart.PieChart;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.style.Styler;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TrackerPieChart extends PieChart {
+public final class TrackerPieChart extends PieChart {
     private final TimeDisplayDialog displayDialog;
 
     public TrackerPieChart(TimeDisplayDialog displayDialog) {
@@ -29,8 +28,8 @@ public class TrackerPieChart extends PieChart {
         this.getStyler().setLabelsDistance(1.15);
         this.getStyler().setPlotContentSize(.7);
         this.getStyler().setStartAngleInDegrees(90);
-        this.getStyler().setChartBackgroundColor(new Color(0, 0, 0, 0));
-        this.getStyler().setPlotBackgroundColor(new Color(0, 0, 0, 0));
+        this.getStyler().setChartBackgroundColor(Utils.TRANSPARENT);
+        this.getStyler().setPlotBackgroundColor(Utils.TRANSPARENT);
 
         this.getStyler().setLabelsFont(JBFont.regular());
         this.getStyler().setLabelsFontColor(JBColor.foreground());

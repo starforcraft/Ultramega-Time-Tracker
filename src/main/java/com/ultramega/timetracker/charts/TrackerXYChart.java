@@ -2,19 +2,18 @@ package com.ultramega.timetracker.charts;
 
 import com.intellij.ui.JBColor;
 import com.intellij.util.ui.JBFont;
+import com.ultramega.timetracker.display.FilterItems;
 import com.ultramega.timetracker.display.TimeDisplayDialog;
 import com.ultramega.timetracker.utils.Bundle;
 import com.ultramega.timetracker.utils.Utils;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.*;
 
-public class TrackerXYChart extends XYChart {
+public final class TrackerXYChart extends XYChart {
     private final TimeDisplayDialog displayDialog;
 
     public TrackerXYChart(TimeDisplayDialog displayDialog) {
@@ -28,8 +27,8 @@ public class TrackerXYChart extends XYChart {
 
         this.getStyler().setLegendVisible(false);
         this.getStyler().setAxisTitlesVisible(false);
-        this.getStyler().setChartBackgroundColor(new Color(0, 0, 0, 0));
-        this.getStyler().setPlotBackgroundColor(new Color(0, 0, 0, 0));
+        this.getStyler().setChartBackgroundColor(Utils.TRANSPARENT);
+        this.getStyler().setPlotBackgroundColor(Utils.TRANSPARENT);
         this.getStyler().setPlotGridLinesColor(JBColor.foreground());
 
         this.getStyler().setAxisTickLabelsFont(JBFont.regular());
@@ -53,17 +52,16 @@ public class TrackerXYChart extends XYChart {
         } else {
             Set<String> processedClasses = new HashSet<>();
 
-            displayDialog.getTimeTrackerService().getClassTimeData().forEach((dateKey, classData) -> {
-                classData.forEach((className, time) -> {
-                    if (processedClasses.add(className)) {
-                        LineChartData data = getLineChartData(className);
-                        boolean onlyZeroData = data.yData.stream().allMatch(value -> value == 0);
-                        if (!onlyZeroData) {
-                            this.addSeries(className, data.xData, data.yData);
+            displayDialog.getTimeTrackerService().getClassTimeData().forEach((dateKey, classData) ->
+                    classData.forEach((className, time) -> {
+                        if (processedClasses.add(className)) {
+                            LineChartData data = getLineChartData(className);
+                            boolean onlyZeroData = data.yData.stream().allMatch(value -> value == 0);
+                            if (!onlyZeroData) {
+                                this.addSeries(className, data.xData, data.yData);
+                            }
                         }
-                    }
-                });
-            });
+                    }));
         }
     }
 
@@ -108,9 +106,9 @@ public class TrackerXYChart extends XYChart {
     }
 
     private Date normalizeDate(Date date) {
-        if (displayDialog.getSelectedFilter() == TimeDisplayDialog.FilterItems.WEEK || displayDialog.getSelectedFilter() == TimeDisplayDialog.FilterItems.MONTH || displayDialog.getSelectedFilter() == TimeDisplayDialog.FilterItems.YEAR) {
+        if (displayDialog.getSelectedFilter() == FilterItems.WEEK || displayDialog.getSelectedFilter() == FilterItems.MONTH || displayDialog.getSelectedFilter() == FilterItems.YEAR) {
             LocalDateTime localDateTime = Utils.convertDateToLocalDateTime(date);
-            if (displayDialog.getSelectedFilter() == TimeDisplayDialog.FilterItems.YEAR) {
+            if (displayDialog.getSelectedFilter() == FilterItems.YEAR) {
                 localDateTime = localDateTime.withDayOfMonth(1);
             }
             return Utils.convertLocalDateTimeToDate(localDateTime.truncatedTo(ChronoUnit.DAYS));

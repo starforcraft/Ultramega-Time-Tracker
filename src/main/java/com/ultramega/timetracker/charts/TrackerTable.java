@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class TrackerTable extends JBTable {
+public final class TrackerTable extends JBTable {
     private final TrackerPieChart pieChart;
 
     public TrackerTable(TrackerPieChart pieChart) {
