@@ -6,6 +6,10 @@
 
 - Hover information in line chart is now scrollable
 
+### Fixed
+
+- Save as... option is working properly now
+
 ## [1.0.2] - 2024-12-15
 
 ### Added
