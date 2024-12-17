@@ -1,5 +1,9 @@
 [versions]
 junit = "4.13.2"
+xchart = "3.8.11-SNAPSHOT"
+vectorgraphics2d = "0.13"
+pdfbox = "3.0.2"
+madgag = "1.4"
 
 changelog = "2.2.1"
 intelliJPlatform = "2.1.0"
@@ -9,6 +13,10 @@ qodana = "2024.2.3"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+xchart = { group = "org.knowm.xchart", name = "xchart", version.ref = "xchart" }
+vectorgraphics2d = { group = "de.erichseifert.vectorgraphics2d", name = "VectorGraphics2D", version.ref = "vectorgraphics2d" }
+pdfbox = { group = "de.rototor.pdfbox", name = "graphics2d", version.ref = "pdfbox" }
+madgag = { group = "com.madgag", name = "animated-gif-lib", version.ref = "madgag" }
 
 [plugins]
 changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }

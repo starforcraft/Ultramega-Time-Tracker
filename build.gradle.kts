@@ -1,5 +1,6 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.jetbrains.kotlin.konan.library.impl.buildLibrary
 
 plugins {
     id("java")
@@ -19,8 +20,8 @@ kotlin {
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
+    mavenLocal()
 
     intellijPlatform {
         defaultRepositories()
@@ -28,7 +29,11 @@ repositories {
 }
 
 dependencies {
-    implementation("org.knowm.xchart:xchart:3.8.11-SNAPSHOT")
+    implementation(libs.xchart)
+
+    api(libs.vectorgraphics2d)
+    api(libs.pdfbox)
+    api(libs.madgag)
 
     testImplementation(libs.junit)
 
@@ -49,6 +54,9 @@ dependencies {
 tasks {
     shadowJar {
         archiveClassifier.set("")
+        dependencies {
+            exclude(dependency("commons-logging:commons-logging"))
+        }
     }
 }
 

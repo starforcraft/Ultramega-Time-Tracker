@@ -111,7 +111,9 @@ public final class TimeTrackerService implements PersistentStateComponent<TimeTr
             this.timeTrackerData.idleTime += TICK_DELAY;
         }
 
-        this.widget.update();
+        if (this.widget != null) {
+            this.widget.update();
+        }
     }
 
     private void checkTodayTime() {

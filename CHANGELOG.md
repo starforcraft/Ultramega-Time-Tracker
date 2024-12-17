@@ -1,5 +1,11 @@
 # Ultramega Time Tracker Changelog
 
+## [1.0.4] - 2024-12-17
+
+### Fixed
+
+- Fixed a NullPointerException when opening IntelliJ
+
 ## [1.0.3] - 2024-12-15
 
 ### Added
