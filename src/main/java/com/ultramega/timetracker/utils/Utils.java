@@ -3,6 +3,7 @@ package com.ultramega.timetracker.utils;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.ultramega.timetracker.display.FilterItems;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
@@ -10,6 +11,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -65,6 +68,16 @@ public final class Utils {
         return date.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
+    }
+
+    public static LocalDateTime getStartLocalDateTime(LocalDateTime now, FilterItems selectedFilter) {
+        return switch (selectedFilter) {
+            case TWELVE_HOURS -> now.minusHours(12).truncatedTo(ChronoUnit.HOURS);
+            case TWENTY_FOUR_HOURS -> now.minusHours(24).truncatedTo(ChronoUnit.HOURS);
+            case WEEK -> now.minusWeeks(1).truncatedTo(ChronoUnit.DAYS);
+            case MONTH -> now.minusMonths(1).truncatedTo(ChronoUnit.DAYS);
+            case YEAR -> now.minusYears(1).with(TemporalAdjusters.firstDayOfMonth()).truncatedTo(ChronoUnit.DAYS);
+        };
     }
 
     @Nullable

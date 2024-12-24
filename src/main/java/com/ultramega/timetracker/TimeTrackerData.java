@@ -10,6 +10,9 @@ import java.util.HashMap;
 @ApiStatus.Internal
 public final class TimeTrackerData {
     public long idleTime;
+    public long totalRunTime;
+    public long totalDebugTime;
+
     public long todayTime;
     @OptionTag(converter = LocalDateTimeConverter.class)
     public LocalDateTime todayDateTime;

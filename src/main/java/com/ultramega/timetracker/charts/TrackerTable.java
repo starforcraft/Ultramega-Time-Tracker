@@ -33,7 +33,7 @@ public final class TrackerTable extends JBTable {
     }
 
     private DefaultTableModel getTableModel() {
-        String[] columnNames = { Bundle.message("display.TimeTrackerStats.table.ClassName"), Bundle.message("display.TimeTrackerStats.table.Time") };
+        String[] columnNames = { Bundle.message("display.TimeTrackerStats.table.className"), Bundle.message("display.TimeTrackerStats.table.time") };
         DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {

@@ -1,8 +1,9 @@
-package com.ultramega.timetracker;
+package com.ultramega.timetracker.listeners;
 
 import com.intellij.openapi.application.ApplicationActivationListener;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.IdeFrame;
+import com.ultramega.timetracker.TimeTrackerService;
 import com.ultramega.timetracker.utils.Status;
 import org.jetbrains.annotations.NotNull;
 

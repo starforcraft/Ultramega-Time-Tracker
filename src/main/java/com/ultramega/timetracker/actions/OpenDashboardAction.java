@@ -7,7 +7,7 @@ import com.ultramega.timetracker.TimeTrackerService;
 import com.ultramega.timetracker.display.TimeDisplayDialog;
 import org.jetbrains.annotations.NotNull;
 
-public final class OpenTrackedTimeStatsAction extends AnAction {
+public final class OpenDashboardAction extends AnAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent actionEvent) {
         Project project = actionEvent.getProject();

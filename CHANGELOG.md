@@ -1,5 +1,16 @@
 # Ultramega Time Tracker Changelog
 
+## [1.0.5] - 2024-12-24
+
+### Added
+
+- Run/Debug duration is now tracked
+- Added summarize stats button to dashboard
+
+### Fixed
+
+- Fixed status bar widget not updating when a dialog is opened
+
 ## [1.0.4] - 2024-12-17
 
 ### Fixed
@@ -34,5 +45,4 @@
 
 - Initial project
 
-[1.0.0]: https://github.com/starforcraft/time-tracker/commits/v1.0.0
-[1.0.1]: https://github.com/starforcraft/time-tracker/commits/v1.0.1
+[1.0.0]: https://github.com/starforcraft/ultramega-time-tracker/commits/v1.0.0

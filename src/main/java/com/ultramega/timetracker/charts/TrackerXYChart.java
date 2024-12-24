@@ -67,7 +67,7 @@ public final class TrackerXYChart extends XYChart {
 
     private LineChartData getLineChartData(String className) {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startLocalDate = displayDialog.getStartLocalDateTime(now);
+        LocalDateTime startLocalDate = Utils.getStartLocalDateTime(now, displayDialog.getSelectedFilter());
         Date startDate = Utils.convertLocalDateTimeToDate(startLocalDate);
 
         Map<Date, Long> timeData = fillTimeData(startDate, className);

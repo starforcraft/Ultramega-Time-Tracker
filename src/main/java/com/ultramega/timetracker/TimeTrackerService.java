@@ -8,7 +8,6 @@ import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.concurrency.EdtExecutorService;
-import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.ultramega.timetracker.actions.ForceStopCountingListener;
 import com.ultramega.timetracker.display.TimeDialogSelectableOptions;
 import com.ultramega.timetracker.utils.Status;
@@ -30,13 +29,13 @@ public final class TimeTrackerService implements PersistentStateComponent<TimeTr
     private static final long TICK_DELAY = 1;
     private static final TimeUnit TICK_DELAY_UNIT = TimeUnit.SECONDS;
 
-    private final TimeTrackerData timeTrackerData = new TimeTrackerData();
     private final TimeDialogSelectableOptions dialogSelectableOptions = new TimeDialogSelectableOptions();
     private final Project project;
 
     public long totalTime;
     public boolean forceStopCounting = false;
 
+    private TimeTrackerData timeTrackerData = new TimeTrackerData();
     private TimeTrackerWidget widget;
     private ScheduledFuture<?> ticker;
     private Status status;
@@ -75,7 +74,7 @@ public final class TimeTrackerService implements PersistentStateComponent<TimeTr
 
     @Override
     public void loadState(@NotNull TimeTrackerData timeTrackerData) {
-        XmlSerializerUtil.copyBean(timeTrackerData, this.timeTrackerData);
+        this.timeTrackerData = timeTrackerData;
 
         // Calculate total time after loading
         for (String date : timeTrackerData.classTimeData.keySet()) {
@@ -98,8 +97,10 @@ public final class TimeTrackerService implements PersistentStateComponent<TimeTr
         checkTodayTime();
 
         this.totalTime += TICK_DELAY;
+        // TODO rework todayTime
         this.timeTrackerData.todayTime += TICK_DELAY;
 
+        // TODO check if there was any input in the last minute and if not increase idleTime
         VirtualFile openedFile = Utils.getOpenedFile(project);
         if (openedFile != null) {
             String currentTime = Utils.getCurrentTimeAsString();
@@ -112,7 +113,7 @@ public final class TimeTrackerService implements PersistentStateComponent<TimeTr
         }
 
         if (this.widget != null) {
-            this.widget.update();
+            this.widget.updateComponent();
         }
     }
 
@@ -135,6 +136,26 @@ public final class TimeTrackerService implements PersistentStateComponent<TimeTr
 
     private long getTodayTime() {
         return timeTrackerData.todayTime;
+    }
+
+    public void addRunTime(Long duration) {
+        timeTrackerData.totalRunTime += duration;
+    }
+
+    public Long getRunTime() {
+        return timeTrackerData.totalRunTime;
+    }
+
+    public void addDebugTime(Long duration) {
+        timeTrackerData.totalDebugTime += duration;
+    }
+
+    public Long getDebugTime() {
+        return timeTrackerData.totalDebugTime;
+    }
+
+    public Long getIdleTime() {
+        return timeTrackerData.idleTime;
     }
 
     public void changeShowTodayTimeOption() {

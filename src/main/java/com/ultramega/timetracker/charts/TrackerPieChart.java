@@ -42,7 +42,7 @@ public final class TrackerPieChart extends PieChart {
 
     public Map<String, Long> getPieChartData() {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startLocalDate = displayDialog.getStartLocalDateTime(now);
+        LocalDateTime startLocalDate = Utils.getStartLocalDateTime(now, displayDialog.getSelectedFilter());
         Date startDate = Utils.convertLocalDateTimeToDate(startLocalDate);
 
         Map<String, Long> pieChartData = new HashMap<>();

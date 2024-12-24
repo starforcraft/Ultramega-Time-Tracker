@@ -15,6 +15,7 @@
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.gradle</depends>
 
     <resource-bundle>messages.bundle</resource-bundle>
 
@@ -23,12 +24,13 @@
     </extensions>
 
     <applicationListeners>
-        <listener class="com.ultramega.timetracker.TimeTrackerApplicationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+        <listener class="com.ultramega.timetracker.listeners.TimeTrackerApplicationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+        <listener class="com.ultramega.timetracker.listeners.RunExecutionListener" topic="com.intellij.execution.ExecutionListener"/>
     </applicationListeners>
 
     <actions>
         <group id="UltramegaTimeTracker" popup="true" class="com.intellij.ide.actions.NonTrivialActionGroup">
-            <action id="OpenTrackedTimeStats" class="com.ultramega.timetracker.actions.OpenTrackedTimeStatsAction" icon="/META-INF/pluginIconSmall.svg"/>
+            <action id="OpenDashboard" class="com.ultramega.timetracker.actions.OpenDashboardAction" icon="/META-INF/pluginIconSmall.svg"/>
             <separator/>
             <action id="ForceStopCounting" class="com.ultramega.timetracker.actions.ForceStopCountingAction"/>
             <action id="ShowTodayTime" class="com.ultramega.timetracker.actions.ShowTodayTimeAction"/>

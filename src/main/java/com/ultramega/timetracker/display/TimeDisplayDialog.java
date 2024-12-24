@@ -14,9 +14,6 @@ import org.knowm.xchart.XChartPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
 
 public final class TimeDisplayDialog extends DialogWrapper {
     private final TimeTrackerService timeTrackerService;
@@ -69,7 +66,7 @@ public final class TimeDisplayDialog extends DialogWrapper {
 
         pieChartPanel.setOpaque(false);
 
-        // Second chart container
+        // Second Chart Container
         JPanel secondChartPanelContainer = new JPanel(cardLayout);
 
         secondChartPanelContainer.add(pieChartPanel, SelectableCharts.PIE_CHART.getName());
@@ -77,6 +74,23 @@ public final class TimeDisplayDialog extends DialogWrapper {
 
         // Select Chart Panel
         JPanel selectChartPanel = new JPanel(new BorderLayout());
+
+        // Total Activity CheckBox
+        JCheckBox totalCheckBox = new JCheckBox(Bundle.message("display.TimeTrackerStats.checkbox.totalActivity"), selectableOptions.showTotalActivity);
+        totalCheckBox.addActionListener(e -> {
+            selectableOptions.showTotalActivity = totalCheckBox.isSelected();
+            lineChart.getStyler().setCursorZeroString(selectableOptions.showTotalActivity ? null : "00:00:00");
+            updateCharts(lineChartPanel, pieChartPanel, selectChartPanel);
+        });
+
+        // Summarize Stats Button
+        JPanel summarizeStatsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        JButton summarizeStatsButton = new JButton(Bundle.message("display.TimeTrackerStats.button.summarizeStats"));
+        summarizeStatsButton.addActionListener(e -> {
+            SummarizeStatsDialog dialog = new SummarizeStatsDialog(timeTrackerService);
+            dialog.show();
+        });
+        summarizeStatsPanel.add(summarizeStatsButton);
 
         // Filter ComboBox
         ComboBox<FilterItems> filterComboBox = new ComboBox<>(FilterItems.values());
@@ -90,14 +104,6 @@ public final class TimeDisplayDialog extends DialogWrapper {
                 selectableOptions.selectedFilter = selectedItem;
                 updateCharts(lineChartPanel, pieChartPanel, selectChartPanel);
             }
-        });
-
-        // Total Activity CheckBox
-        JCheckBox totalCheckBox = new JCheckBox(Bundle.message("display.TimeTrackerStats.checkbox.TotalActivity"), selectableOptions.showTotalActivity);
-        totalCheckBox.addActionListener(e -> {
-            selectableOptions.showTotalActivity = totalCheckBox.isSelected();
-            lineChart.getStyler().setCursorZeroString(selectableOptions.showTotalActivity ? null : "00:00:00");
-            updateCharts(lineChartPanel, pieChartPanel, selectChartPanel);
         });
 
         // Select Chart ComboBox
@@ -116,8 +122,9 @@ public final class TimeDisplayDialog extends DialogWrapper {
         selectChartPanel.add(selectChartComboBox, BorderLayout.EAST);
 
         JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.add(filterComboBox, BorderLayout.EAST);
         topPanel.add(totalCheckBox, BorderLayout.WEST);
+        topPanel.add(summarizeStatsPanel, BorderLayout.CENTER);
+        topPanel.add(filterComboBox, BorderLayout.EAST);
 
         mainPanel.add(topPanel);
         mainPanel.add(lineChartPanel);
@@ -128,7 +135,7 @@ public final class TimeDisplayDialog extends DialogWrapper {
         return mainPanel;
     }
 
-    // TODO: add live chart update (but it has to be performant, so only update relevant values instead of clearing it every second)
+    // TODO add live chart update (but it has to be performant, so only update relevant values instead of clearing it every second)
     private void updateCharts(JPanel lineChartPanel, JPanel pieChartPanel, JPanel selectChartPanel) {
         SwingUtilities.invokeLater(() -> {
             updateLineChart(lineChartPanel);
@@ -158,16 +165,6 @@ public final class TimeDisplayDialog extends DialogWrapper {
 
         pieChartPanel.revalidate();
         pieChartPanel.repaint();
-    }
-
-    public LocalDateTime getStartLocalDateTime(LocalDateTime now) {
-        return switch (selectableOptions.selectedFilter) {
-            case TWELVE_HOURS -> now.minusHours(12).truncatedTo(ChronoUnit.HOURS);
-            case TWENTY_FOUR_HOURS -> now.minusHours(24).truncatedTo(ChronoUnit.HOURS);
-            case WEEK -> now.minusWeeks(1).truncatedTo(ChronoUnit.DAYS);
-            case MONTH -> now.minusMonths(1).truncatedTo(ChronoUnit.DAYS);
-            case YEAR -> now.minusYears(1).with(TemporalAdjusters.firstDayOfMonth()).truncatedTo(ChronoUnit.DAYS);
-        };
     }
 
     @Override

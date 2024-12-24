@@ -31,13 +31,17 @@ public final class TimeTrackerWidget extends EditorBasedStatusBarPopup {
 
     @Override
     protected @NotNull WidgetState getWidgetState(@Nullable VirtualFile file) {
-        // TODO: For some reason when opening a popup/dialog the time text is not updating anymore
         if (timeTrackerService.forceStopCounting) {
             return WidgetState.NO_CHANGE;
         }
 
         String toolTipText = Bundle.message("status.bar.ultramega_time_tracker.widget.name");
         return new WidgetState(toolTipText, Utils.convertSecondsToTime(timeTrackerService.getWidgetTime()), true);
+    }
+
+    // Use updateComponent instead of update to ensure the widget refreshes correctly when a dialog is opened.
+    public void updateComponent() {
+        super.updateComponent(getWidgetState(null));
     }
 
     @Override
