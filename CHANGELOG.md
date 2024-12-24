@@ -1,5 +1,11 @@
 # Ultramega Time Tracker Changelog
 
+## Unreleased
+
+### Fixed
+
+- Fixed time tracking continuing when switching IntelliJ windows to a different project
+
 ## [1.0.5] - 2024-12-24
 
 ### Added
