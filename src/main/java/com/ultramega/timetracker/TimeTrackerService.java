@@ -7,6 +7,7 @@ import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.util.Alarm;
 import com.intellij.util.concurrency.EdtExecutorService;
 import com.ultramega.timetracker.actions.ForceStopCountingListener;
 import com.ultramega.timetracker.display.TimeDialogSelectableOptions;
@@ -35,6 +36,12 @@ public final class TimeTrackerService implements PersistentStateComponent<TimeTr
     public long totalTime;
     public boolean forceStopCounting = false;
 
+    // Inactivity stuff
+    private long lastInputTime = System.currentTimeMillis();
+    private static final long INACTIVITY_THRESHOLD = 60000L; // 1 minute in milliseconds
+    private final Alarm alarm = new Alarm(Alarm.ThreadToUse.SWING_THREAD);
+    private boolean isInactive = false;
+
     private TimeTrackerData timeTrackerData = new TimeTrackerData();
     private TimeTrackerWidget widget;
     private ScheduledFuture<?> ticker;
@@ -44,6 +51,7 @@ public final class TimeTrackerService implements PersistentStateComponent<TimeTr
         this.project = project;
         setStatus(Status.RUNNING);
         checkTodayTime();
+        startInactivityCheck();
     }
 
     private synchronized void tick() {
@@ -100,9 +108,8 @@ public final class TimeTrackerService implements PersistentStateComponent<TimeTr
         // TODO rework todayTime
         this.timeTrackerData.todayTime += TICK_DELAY;
 
-        // TODO check if there was any input in the last minute and if not increase idleTime
         VirtualFile openedFile = Utils.getOpenedFile(project);
-        if (openedFile != null) {
+        if (!isInactive && openedFile != null) {
             String currentTime = Utils.getCurrentTimeAsString();
             String fileName = openedFile.getName();
             Map<String, Long> classTimeData = timeTrackerData.classTimeData.computeIfAbsent(currentTime, k -> new HashMap<>());
@@ -124,6 +131,21 @@ public final class TimeTrackerService implements PersistentStateComponent<TimeTr
             this.timeTrackerData.todayTime = 0;
             this.timeTrackerData.todayDateTime = LocalDate.now().atStartOfDay();
         }
+    }
+
+    private void startInactivityCheck() {
+        alarm.addRequest(() -> {
+            if (System.currentTimeMillis() - lastInputTime >= INACTIVITY_THRESHOLD) {
+                isInactive = true;
+            }
+
+            startInactivityCheck();
+        }, INACTIVITY_THRESHOLD / 2);
+    }
+
+    public void resetLastInputTime() {
+        this.lastInputTime = System.currentTimeMillis();
+        this.isInactive = false;
     }
 
     public long getWidgetTime() {

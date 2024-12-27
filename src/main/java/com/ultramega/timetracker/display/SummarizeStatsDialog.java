@@ -4,12 +4,11 @@ import com.intellij.openapi.ui.DialogWrapper;
 import com.ultramega.timetracker.TimeTrackerService;
 import com.ultramega.timetracker.utils.Bundle;
 import com.ultramega.timetracker.utils.Utils;
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.util.concurrent.TimeUnit;
 
-public class SummarizeStatsDialog extends DialogWrapper {
+public final class SummarizeStatsDialog extends DialogWrapper {
     private final TimeTrackerService timeTrackerService;
 
     public SummarizeStatsDialog(TimeTrackerService timeTrackerService) {
@@ -21,7 +20,7 @@ public class SummarizeStatsDialog extends DialogWrapper {
     }
 
     @Override
-    protected @Nullable JComponent createCenterPanel() {
+    protected JComponent createCenterPanel() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 

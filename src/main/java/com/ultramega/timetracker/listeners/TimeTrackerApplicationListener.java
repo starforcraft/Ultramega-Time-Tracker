@@ -7,30 +7,12 @@ import com.ultramega.timetracker.TimeTrackerService;
 import com.ultramega.timetracker.utils.Status;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-
 public final class TimeTrackerApplicationListener implements ApplicationActivationListener {
-    private boolean focusListenerAdded = false;
+    private TimeTrackerService timeTrackerService;
 
     @Override
     public void applicationActivated(@NotNull IdeFrame ideFrame) {
         setStatus(ideFrame, Status.RUNNING);
-
-        if (!focusListenerAdded) {
-            ideFrame.getComponent().addFocusListener(new FocusListener() {
-                @Override
-                public void focusGained(FocusEvent e) {
-                    applicationActivated(ideFrame);
-                }
-
-                @Override
-                public void focusLost(FocusEvent e) {
-                    applicationDeactivated(ideFrame);
-                }
-            });
-            focusListenerAdded = true;
-        }
     }
 
     @Override
@@ -39,9 +21,14 @@ public final class TimeTrackerApplicationListener implements ApplicationActivati
     }
 
     private void setStatus(IdeFrame ideFrame, Status status) {
-        Project project = ideFrame.getProject();
-        if (project != null) {
-            project.getService(TimeTrackerService.class).setStatus(status);
+        if (timeTrackerService == null) {
+            Project project = ideFrame.getProject();
+            if (project != null) {
+                this.timeTrackerService = project.getService(TimeTrackerService.class);
+            }
+        }
+        if (timeTrackerService != null) {
+            this.timeTrackerService.setStatus(status);
         }
     }
 }

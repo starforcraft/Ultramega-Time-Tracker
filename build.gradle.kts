@@ -1,6 +1,5 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
-import org.jetbrains.kotlin.konan.library.impl.buildLibrary
 
 plugins {
     id("java")
@@ -57,6 +56,7 @@ tasks {
         dependencies {
             exclude(dependency("commons-logging:commons-logging"))
         }
+        minimize()
     }
 }
 

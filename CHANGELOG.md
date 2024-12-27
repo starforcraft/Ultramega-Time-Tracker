@@ -1,10 +1,17 @@
 # Ultramega Time Tracker Changelog
 
-## Unreleased
+## [1.0.6] - 2024-12-27
+
+### Added
+- Pie chart slices representing very small percentages (less than 2%) are now grouped into a single category labeled "Other"
+  - Hovering over it reveals the combined classes it includes
+
+### Changed
+- No mouse/keyboard input for one minute is now counted as idle time
 
 ### Fixed
 
-- Fixed time tracking continuing when switching IntelliJ windows to a different project
+- Resolved an issue where the scroll pane would occasionally fail to appear
 
 ## [1.0.5] - 2024-12-24
 

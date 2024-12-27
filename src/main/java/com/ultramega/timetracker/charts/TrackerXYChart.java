@@ -30,6 +30,8 @@ public final class TrackerXYChart extends XYChart {
         this.getStyler().setChartBackgroundColor(Utils.TRANSPARENT);
         this.getStyler().setPlotBackgroundColor(Utils.TRANSPARENT);
         this.getStyler().setPlotGridLinesColor(JBColor.foreground());
+        //TODO Find better colors
+        //this.getStyler().setSeriesColors(new BaseSeriesColors().getSeriesColors());
 
         this.getStyler().setAxisTickLabelsFont(JBFont.regular());
         this.getStyler().setAxisTickLabelsColor(JBColor.foreground());

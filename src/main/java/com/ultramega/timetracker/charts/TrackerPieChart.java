@@ -1,5 +1,6 @@
 package com.ultramega.timetracker.charts;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.ui.JBColor;
 import com.intellij.util.ui.JBFont;
 import com.ultramega.timetracker.display.TimeDisplayDialog;
@@ -30,10 +31,17 @@ public final class TrackerPieChart extends PieChart {
         this.getStyler().setStartAngleInDegrees(90);
         this.getStyler().setChartBackgroundColor(Utils.TRANSPARENT);
         this.getStyler().setPlotBackgroundColor(Utils.TRANSPARENT);
+        this.getStyler().setCombineSmallSlices(true);
+        this.getStyler().setInfoIcon(AllIcons.General.ShowInfos);
+        //TODO Find better colors
+        //this.getStyler().setSeriesColors(new BaseSeriesColors().getSeriesColors());
 
         this.getStyler().setLabelsFont(JBFont.regular());
         this.getStyler().setLabelsFontColor(JBColor.foreground());
         this.getStyler().setLabelsFontColorAutomaticEnabled(false);
+
+        this.getStyler().setToolTipsEnabled(true);
+        this.getStyler().setCustomCursorDataFormattingFunction(v -> Utils.convertSecondsToTime(v.longValue()));
 
         // Add data to chart
         Map<String, Long> pieChartData = getPieChartData();

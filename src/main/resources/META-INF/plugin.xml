@@ -21,6 +21,8 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <statusBarWidgetFactory id="UltramegaTimeTrackerWidget" implementation="com.ultramega.timetracker.widgets.TimeTrackerWidgetFactory" order="after largeFileEncodingWidget"/>
+        <editorFactoryMouseListener implementation="com.ultramega.timetracker.listeners.InputMouseListener"/>
+        <typedHandler implementation="com.ultramega.timetracker.listeners.InputMouseListener"/>
     </extensions>
 
     <applicationListeners>
