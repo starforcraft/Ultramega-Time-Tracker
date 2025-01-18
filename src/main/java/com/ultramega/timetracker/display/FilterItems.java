@@ -6,7 +6,7 @@ public enum FilterItems {
     WEEK("week"),
     MONTH("month"),
     YEAR("year");
-    //TOTAL("total");
+    //TOTAL("total"); //TODO: add total
 
     private final String name;
 

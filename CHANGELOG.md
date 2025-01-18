@@ -1,5 +1,7 @@
 # Ultramega Time Tracker Changelog
 
+## Unreleased
+
 ## [1.0.6] - 2024-12-27
 
 ### Added

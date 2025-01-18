@@ -104,9 +104,11 @@ public final class TimeTrackerService implements PersistentStateComponent<TimeTr
 
         checkTodayTime();
 
-        this.totalTime += TICK_DELAY;
-        // TODO rework todayTime
-        this.timeTrackerData.todayTime += TICK_DELAY;
+        if (!isInactive) {
+            this.totalTime += TICK_DELAY;
+            // TODO rework todayTime
+            this.timeTrackerData.todayTime += TICK_DELAY;
+        }
 
         VirtualFile openedFile = Utils.getOpenedFile(project);
         if (!isInactive && openedFile != null) {

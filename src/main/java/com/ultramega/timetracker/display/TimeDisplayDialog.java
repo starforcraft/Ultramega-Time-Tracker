@@ -92,14 +92,16 @@ public final class TimeDisplayDialog extends DialogWrapper {
         });
         summarizeStatsPanel.add(summarizeStatsButton);
 
-        // Filter ComboBox
-        ComboBox<FilterItems> filterComboBox = new ComboBox<>(FilterItems.values());
-        filterComboBox.setSelectedItem(selectableOptions.selectedFilter);
-        filterComboBox.setRenderer(SimpleListCellRenderer.create("", (filterItems) ->
-                Bundle.message("display.TimeTrackerStats.filter." + filterItems.getName())
+        // TODO: add dropdown to deselect and select tracked classes (filter options)
+
+        // Filter Time ComboBox
+        ComboBox<FilterItems> filterTimeComboBox = new ComboBox<>(FilterItems.values());
+        filterTimeComboBox.setSelectedItem(selectableOptions.selectedFilter);
+        filterTimeComboBox.setRenderer(SimpleListCellRenderer.create("", (filterItems) ->
+                Bundle.message("display.TimeTrackerStats.filter.time." + filterItems.getName())
         ));
-        filterComboBox.addActionListener(e -> {
-            FilterItems selectedItem = (FilterItems) filterComboBox.getSelectedItem();
+        filterTimeComboBox.addActionListener(e -> {
+            FilterItems selectedItem = (FilterItems) filterTimeComboBox.getSelectedItem();
             if (selectedItem != null) {
                 selectableOptions.selectedFilter = selectedItem;
                 updateCharts(lineChartPanel, pieChartPanel, selectChartPanel);
@@ -124,7 +126,7 @@ public final class TimeDisplayDialog extends DialogWrapper {
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.add(totalCheckBox, BorderLayout.WEST);
         topPanel.add(summarizeStatsPanel, BorderLayout.CENTER);
-        topPanel.add(filterComboBox, BorderLayout.EAST);
+        topPanel.add(filterTimeComboBox, BorderLayout.EAST);
 
         mainPanel.add(topPanel);
         mainPanel.add(lineChartPanel);
